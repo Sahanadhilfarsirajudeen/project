@@ -1,0 +1,117 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+public class Person
+{
+	public string firstName;
+  public string lastName;
+	public int age;
+
+	public Person(string firstName, string lastName, int age) {
+		this.firstName = firstName;
+    this.lastName = lastName;
+		this.age = age;
+	}
+
+	public override string ToString()
+	{
+		return $"{this.firstName} {this.lastName} is {this.age} years old.";
+	}
+}
+
+public class Example
+{
+	public static void Main()
+	{
+    var lines =5;
+    List<Person> persons = new List<Person>() ;
+    for (int i=0;i<lines;i++ )
+    {
+      var cmdArgs =Console.ReadLine().Split();
+      var person = new Person(cmdArgs[0],cmdArgs[1],int.Parse(cmdArgs[2]));
+      persons.Add(person);
+    }
+		 persons.OrderBy(x => x.firstName)
+									.ThenBy(x => x.age)
+									.ToList()
+                  .ForEach(x=> Console.WriteLine(x.ToString()));
+
+		
+	}
+}
+
+
+
+
+ITERATOR PROGRAM
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Collections.IEnumerable;
+namespace Enumerator
+{
+public class Myclass
+{
+ static void Main(string[] args)
+ {
+     Book bookOne = new Book("Animal Farm", 2003, "George Orwell");
+     Book bookTwo = new Book("The Documents in the Case", 2002, "Dorothy Sayers", "Robert Eustace");
+     Book bookThree = new Book("The Documents in the Case", 1930);
+
+     Library libraryOne = new Library();
+     Library libraryTwo = new Library(bookOne, bookTwo, bookThree); 
+    foreach (var book in libraryTwo)
+     {
+         Console.WriteLine(book.Title);
+     }
+     
+ }
+}
+public class Book
+{
+  public Book (string title, int year, params string[] authors)
+  {
+    this.Title=title;
+    this.Year=year;
+    this.Authors=authors;
+  }
+  public string Title{get;set;}
+  public int Year {get;set;}
+  public IReadOnlyList<string> Authors {get;set;}
+}
+public class Library
+{
+  private List<Book> books;
+  public Library(params Book[] books)
+  {
+    this.books=new List<Book>(books);
+  }
+  public IEnumerator<Book> GetEnumerator()
+  {
+    return new LibraryIterator(this.books);
+  }
+  IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+  
+  private class LibraryIterator : IEnumerator<Book>
+  {
+    private readonly List<Book> books;
+    private int currentIndex;
+    public LibraryIterator(IEnumerable<Book> books)
+    {
+      this.Reset();
+      this.books = new List<Book>(books);
+    }
+    public void Dispose()
+    {
+    }
+    public bool MoveNext() => ++this.currentIndex < this.books.Count;
+    public void Reset() => this.currentIndex = -1;
+    public Book Current => this.books[this.currentIndex];
+    object IEnumerator.Current => this.Current;
+  }
+}
+  }
