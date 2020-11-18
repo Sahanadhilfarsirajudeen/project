@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body  {
+  background-image: url("https://cdn.images.express.co.uk/img/dynamic/80/590x/secondary/Ancient-Egypt-pyramids-builders-conspiracy-theory-pyramids-lay-lines-1825078.webp?r=1555485712065");
+  background-color: #cccccc;
+}
+</style>
+</head>
+<body>
+
+<h1>The background-image Property</h1>
+
+<p>Hello World!</p>
+
+</body>
+</html>
